@@ -8,58 +8,82 @@
 """
 
 # Imports
+import discord                                          #import libraries
+from discord.ext import commands
+from discord.ext.commands import bot
 import time
 import json
 from Watch import Watch
 import os
 import sys
+import asyncio
+import datetime as dt
+import uuid
+import requests
+import shutil
+from requests import Response
 
-# Load the config file
-print("Starting HotFolders.py")
-try:
-    config_file = open('hotfolders_config.json', 'r')
-except FileNotFoundError as err:
-    print("ERROR: Could not find JSON config file - ensure current working directory contains hotfolders_config.json")
+
+client = commands.Bot(command_prefix="+")  
+config_file = open('hotfolders_config.json', 'r')
+
+@client.event                                           #message connect!
+async def on_ready():
+    print("Bot is ready")
+
+@client.command()                                       # wide command and processing 
+async def convert(ctx):
+
+    try:
+        url = ctx.message.attachments[0].url            # check for an image, call exception if none found
+    except IndexError:
+        print("Error: No attachments")
+        await ctx.send("No attachments detected!")
+    else:
+        if url[0:26] == "https://cdn.discordapp.com":   # look to see if url is from discord
+            r = requests.get(url, stream=True)
+            imageName = 'fullsized_image' + '.png'      # save image to wide
+            with open(imageName, 'wb') as out_file:
+                print('Saving image: ' + imageName)
+                shutil.copyfileobj(r.raw, out_file)     # save image from discord server
+                
+
+
+
+
+@client.command()                                       # wide command and processing 
+async def process(ctx):
+    print("Starting HotFolders.py")                         # Load the config file
+    try:
+        config_file = open('hotfolders_config.json', 'r')
+    except FileNotFoundError as err:
+        print("ERROR: Could not find JSON config file - ensure current working directory contains hotfolders_config.json")
     sys.exit(0)
-
-# Use json.load to get the data from the config file
-try:
-    config_info = json.load(config_file)
-    api_key = config_info['api_key'][0]
-    config_info = config_info["conversions"]
-except json.decoder.JSONDecodeError as err:
-    print("ERROR: Could not parse 'hotfolders_config.json' - invalid JSON found:")
-    print(err)
-    sys.exit(0)
-
-
-"""
-    We need to set a watch for each of the directories watched.
-    This is achieved using the Watch class written for this project.
-    We make a watch object for each path watched. This is necessary as each path will have different options in
-    formats and some paths may utilise the auto-extract or subdirectory search functions whilst others might not
-"""
-
-# This will hold the watch objects for the paths
-watch_list = []
-
-for key in config_info:
+    try:
+        config_info = json.load(config_file)
+        api_key = config_info['api_key'][0]
+        config_info = config_info["conversions"]
+    except json.decoder.JSONDecodeError as err:
+        print("ERROR: Could not parse 'hotfolders_config.json' - invalid JSON found:")
+        print(err)
+        watch_list = []
+    for key in config_info:
     # Check the path exists, if not, skip it with an error message in the log
-    if not os.path.exists(key):
-        print("ERROR: " + key + " does not exist - cannot monitor\n")
-        sys.exit(0)
+        if not os.path.exists(key):
+            print("ERROR: " + key + " does not exist - cannot monitor\n")
+            sys.exit(0)
     else:
         print("Monitoring: " + key)
         # Each key is a directory path.
         watch_list.append(Watch(key, config_info[key]['to'], config_info[key]['from'], config_info[key]['options'],
                             config_info[key]['ignore'], api_key))
+    try:
+        while True:
+            time.sleep(0.5)
+    except KeyboardInterrupt:
+        for w in watch_list:
+            del w
+    await ctx.send('Wide!', file=discord.File('convert.png'))
+    
 
-# Keep the program running, checking for keyboard input. If input is detected then clean up the Watch objects and end
-# the program.
-try:
-    while True:
-        time.sleep(0.5)
-except KeyboardInterrupt:
-    for w in watch_list:
-        del w
-    # Upon program termination remake the config file with the new ignore
+client.run('ODM3MDA5ODA2MDUyNTU2ODYw.YImUIA.C7pGgpsnCOz0X3ykyjJggjYRMf0')
