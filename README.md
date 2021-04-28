@@ -96,7 +96,6 @@ This program uses the [Zamzar file conversion API](https://developers.zamzar.com
 3. Add a new Bot
 4. Copy its token
 5. paste it in "HotFolders.py"
-6. Run python program
 
 ## Configuration
 
