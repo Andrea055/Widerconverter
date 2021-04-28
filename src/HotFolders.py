@@ -26,6 +26,24 @@ from requests import Response
 
 client = commands.Bot(command_prefix="+")  
 config_file = open('hotfolders_config.json', 'r')
+config_info = json.load(config_file)
+api_key = config_info['api_key'][0]
+config_info = config_info["conversions"]
+
+
+# This will hold the watch objects for the paths
+watch_list = []
+
+for key in config_info:
+    # Check the path exists, if not, skip it with an error message in the log
+    if not os.path.exists(key):
+        print("ERROR: " + key + " does not exist - cannot monitor\n")
+        sys.exit(0)
+    else:
+        print("Monitoring: " + key)
+        # Each key is a directory path.
+        watch_list.append(Watch(key, config_info[key]['to'], config_info[key]['from'], config_info[key]['options'],
+                            config_info[key]['ignore'], api_key))
 
 @client.event                                           #message connect!
 async def on_ready():
@@ -45,45 +63,17 @@ async def convert(ctx):
             imageName = 'fullsized_image' + '.png'      # save image to wide
             with open(imageName, 'wb') as out_file:
                 print('Saving image: ' + imageName)
-                shutil.copyfileobj(r.raw, out_file)     # save image from discord server
+                shutil.copyfileobj(r.raw, out_file)
+                time.sleep(15)                          # Sleep for 15 seconds 
+                await ctx.send('In .gif', file=discord.File('fullsized_image.gif')) # send image in server discord
+                time.sleep(5)                          # Sleep for 5 seconds 
+                os.remove("fullsized_image.gif")       # Destroy file to no-loop program
                 
 
 
 
 
-@client.command()                                       # wide command and processing 
-async def process(ctx):
-    print("Starting HotFolders.py")                         # Load the config file
-    try:
-        config_file = open('hotfolders_config.json', 'r')
-    except FileNotFoundError as err:
-        print("ERROR: Could not find JSON config file - ensure current working directory contains hotfolders_config.json")
-    sys.exit(0)
-    try:
-        config_info = json.load(config_file)
-        api_key = config_info['api_key'][0]
-        config_info = config_info["conversions"]
-    except json.decoder.JSONDecodeError as err:
-        print("ERROR: Could not parse 'hotfolders_config.json' - invalid JSON found:")
-        print(err)
-        watch_list = []
-    for key in config_info:
-    # Check the path exists, if not, skip it with an error message in the log
-        if not os.path.exists(key):
-            print("ERROR: " + key + " does not exist - cannot monitor\n")
-            sys.exit(0)
-    else:
-        print("Monitoring: " + key)
-        # Each key is a directory path.
-        watch_list.append(Watch(key, config_info[key]['to'], config_info[key]['from'], config_info[key]['options'],
-                            config_info[key]['ignore'], api_key))
-    try:
-        while True:
-            time.sleep(0.5)
-    except KeyboardInterrupt:
-        for w in watch_list:
-            del w
-    await ctx.send('Wide!', file=discord.File('convert.png'))
+
     
 
-client.run('TOKEN')
+client.run('ODM3MDA5ODA2MDUyNTU2ODYw.YImUIA.pi0XJ8twTi5Zlbva8zhQeSo5zS8')
