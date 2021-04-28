@@ -76,4 +76,4 @@ async def convert(ctx):
 
     
 
-client.run('ODM3MDA5ODA2MDUyNTU2ODYw.YImUIA.pi0XJ8twTi5Zlbva8zhQeSo5zS8')
+client.run('TOKEN')
