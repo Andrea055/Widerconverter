@@ -86,4 +86,4 @@ async def process(ctx):
     await ctx.send('Wide!', file=discord.File('convert.png'))
     
 
-client.run('ODM3MDA5ODA2MDUyNTU2ODYw.YImUIA.C7pGgpsnCOz0X3ykyjJggjYRMf0')
+client.run('TOKEN')
