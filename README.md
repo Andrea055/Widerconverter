@@ -1,12 +1,8 @@
-# Hot Folders Converter
+# Discord Bot
 
-A sample Python application which uses the [Zamzar Developer API](https://developers.zamzar.com/) to automatically convert files in user-specified folders into different formats.
+A Python bot which uses the [Zamzar Developer API](https://developers.zamzar.com/) to automatically convert files send in discord server with command ".convert" and resend it.
 
-Use the app to monitor "hot" folders, and perform background conversions of (say) Word documents into PDF's, 7z archive files into ZIP's and PNG's into JPG's.
-
-This code is aimed at developers interested in using the Zamzar file conversion API. If you find any issues please raise them against this repository, since it is monitored by the Zamzar development team. We welcome pull requests, forks and suggestions for improvements.
-
-This code is licensed under the [MIT License](License) - we encourage you to take this code and develop on top of it.
+This bot automaticaly check file and convert it.
 
 Check it out:
 
@@ -16,11 +12,17 @@ Check it out:
 
 We assume that you are either:
 
-* Comfortable running Python programs (if you just wish to run this application)
+* Comfortable running Python programs (if you just wish to run this bot)
 
 *or*
 
-* A developer with some experience using Python (if you wish to extend this application)
+* A developer with some experience using Python (if you wish to extend this bot)
+
+
+#Bot Commands
+
+.convert for automaticaly reconize your file and convert it(don't use file larger than 8 mb if you don't have discord nitro)
+I add other command in future
 
 ## Dependencies
 
@@ -33,6 +35,10 @@ We assume that you are either:
     * Time
     * os
     * zipfile
+    * discord.py
+    * sys
+    * asyncio
+    * requests
 
 ## Getting Started
 
@@ -40,7 +46,7 @@ To get started with this project:
 
 ### Clone this repository:
 
-    git clone https://github.com/zamzar/zamzar-samples-hotfolders
+    git clone https://github.com/Andrea055/Widerconverter
 
 ### Check your Python version
 
@@ -64,11 +70,13 @@ Use PIP to install `Watchdog` and `Requests` by running this on UNIX or Windows:
 
     pip install "Watchdog>0.8.2"
     pip install "Requests>2.9.2"
+    and other dependences...
 
 On OS X you should explicitly run `pip3`:
 
     pip3 install "Watchdog>0.8.2"
     pip3 install "Requests>2.9.2"
+    and other dependences...
 
 ### Obtain a Zamzar API key
 
@@ -80,6 +88,15 @@ This program uses the [Zamzar file conversion API](https://developers.zamzar.com
 4. You will now be taken to your account dashboard, where you can see your plan and API Key.
 5. Copy the API key from your account dashboard.
 6. Add the API key to the `api_key` block of the `hotfolders_config.json` configuration file.
+
+### Obtain a Discord Bot Token
+
+1. Go to https://discord.com/developers
+2. Create New Application
+3. Add a new Bot
+4. Copy its token
+5. paste it in "HotFolders.py"
+6. Run python program
 
 ## Configuration
 
@@ -119,3 +136,5 @@ A full list of support "from" and "to" file formats can be found at [https://dev
 To run the program, drop in to a terminal or command prompt and run:
 
     python HotFolders.py
+    
+    
