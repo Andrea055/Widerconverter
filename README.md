@@ -4,10 +4,6 @@ A Python bot which uses the [Zamzar Developer API](https://developers.zamzar.com
 
 This bot automaticaly check file and convert it.
 
-Check it out:
-
-![Zamzar Dropbox converter](images/zamzar-hotfolders.gif)
-
 ## Assumptions
 
 We assume that you are either:
