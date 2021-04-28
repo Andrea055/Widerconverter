@@ -4,7 +4,7 @@ Here you can see the full list of changes between each Zamzar Dropbox Converter 
 
 # Version 2
 
-Made discord bot with this fantastic code. Thanks to creator
+Made discord bot with this fantastic code. Thanks to creator of this start code
 
 # Version 1.1.0
 
