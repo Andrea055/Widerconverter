@@ -1,5 +1,5 @@
 {
-  "conversions": {            //put your folder where file to convert are stocked
+  "conversions": {            //put your folder where files to convert are stocked
     "FOLDER": {
       "from": [
         "7z",
@@ -19,7 +19,7 @@
 
       ]
     },
-    "FOLDER": {                 //put your folder where file to convert are stocked
+    "FOLDER": {                 //put your folder where files to convert are stocked
       "from": [
         "png",
         "gif",
