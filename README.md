@@ -19,7 +19,7 @@ We assume that you are either:
 * A developer with some experience using Python (if you wish to extend this bot)
 
 
-#Bot Commands
+## Bot Commands
 
 .convert for automaticaly reconize your file and convert it(don't use file larger than 8 mb if you don't have discord nitro)
 I add other command in future
