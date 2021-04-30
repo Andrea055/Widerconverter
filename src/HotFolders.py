@@ -158,6 +158,24 @@ async def svg2png(ctx):
             os.remove('output.png')
             os.remove('url.svg')
 
+@client.command()
+async def svg2pdf(ctx):
+    try:
+        url = ctx.message.attachments[0].url            # check for an image, call exception if none found
+    except IndexError:
+        print("Error: No attachments")
+        await ctx.send("No attachments detected!")
+    else:
+        if url[0:26] == "https://cdn.discordapp.com":   # look to see if url is from discord
+            r = requests.get(url, stream=True)
+            open('url', 'wb').write(r.content)
+            os.rename(r'E:\BOT\bot-env\zamzar-samples-hotfolders-master\src\url',r'E:\BOT\bot-env\zamzar-samples-hotfolders-master\src\url.svg')
+            cairosvg.svg2pdf(
+                file_obj=open("url.svg", "rb"), write_to="output.pdf")
+            await ctx.send('PDF for you!', file=discord.File('output.pdf'))
+            time.sleep(3)
+            os.remove('output.pdf')
+            os.remove('url.svg')
 
 
 
