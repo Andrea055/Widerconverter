@@ -21,6 +21,7 @@ We assume that you are either:
 I add other command in future
 .convertpng convert png to jpg
 .convertpdf convert txt to pdf
+.svg2png convert svg to png
 ## Dependencies
 
 * Python 3.x
