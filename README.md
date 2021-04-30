@@ -1,6 +1,6 @@
 # Discord Bot
 
-A Python bot which uses the [Zamzar Developer API](https://developers.zamzar.com/) to automatically convert files send in discord server with command ".convert" and resend it.
+A Python bot which uses the [Zamzar Developer API](https://developers.zamzar.com/) and fpdf to automatically convert files send in discord server with command ".convert" and resend it.
 
 This bot automaticaly check file and convert it.
 
@@ -19,7 +19,8 @@ We assume that you are either:
 
 .convert for automaticaly reconize your file and convert it(don't use file larger than 8 mb if you don't have discord nitro)
 I add other command in future
-
+.convertpng convert png to jpg
+.convertpdf convert txt to pdf
 ## Dependencies
 
 * Python 3.x
