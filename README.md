@@ -22,6 +22,7 @@ I add other command in future
 .convertpng convert png to jpg
 .convertpdf convert txt to pdf
 .svg2png convert svg to png
+.svg2pdf convert svg to pdf
 ## Dependencies
 
 * Python 3.x
